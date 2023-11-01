@@ -1,76 +1,97 @@
-import React from 'react';
+import React, { useState } from 'react';
 import './WeatherApp.css';
 import search_icon from '../Assets/search.png';
-import clear_icon from '../Assets/clear.png';
 import cloud_icon from '../Assets/cloud.png';
-import drizzle_icon from '../Assets/drizzle.png';
-import rain_icon from '../Assets/rain.png';
-import snow_icon from '../Assets/snow.png';
-import wind_icon from '../Assets/wind.png';
 import humidity_icon from '../Assets/humidity.png';
+import wind_icon from '../Assets/wind.png';
+import clear_icon from '../Assets/clear.png';
+import drizzle_icon from '../Assets/drizzle.png';
+import snow_icon from '../Assets/snow.png';
+import rain_icon from '../Assets/rain.png';
 
+const WeatherApp = () => {
+    const [weatherData, setWeatherData] = useState({
+        humidity: '',
+        windSpeed: '',
+        temperature: '',
+        location: 'Nairobi',
+    });
 
-const WeatherApp = async() => {
+    const api_key = '1c7bc325ebb36a88e6e076620146edc9';
+    const [wicon, setWicon] = useState(cloud_icon);
 
-    let api_key = "1c7bc325ebb36a88e6e076620146edc9";
+    const fetchData = async () => {
+        const element = document.getElementsByClassName('cityInput');
+        if (element[0].value === '') {
+            return;
+        }
 
-    const search = () => {
-        // code to fetch the data from Weather API and display to our app
-        const element = document.getElementsByClassName("cityInput");
-        if(element[0].value==="") {
-            return 0;
-        } 
+        const url = `https://api.openweathermap.org/data/2.5/weather?q=${element[0].value}&units=Metric&appid=${api_key}`;
 
-        let url = `https://api.openweathermap.org/data/2.5/weather?q=${element[0].value}&units=Metric&appid=${api_key}`;
+        try {
+            const response = await fetch(url);
+            const data = await response.json();
 
-        let response = await fetch(url);
+            setWeatherData({
+                humidity: data.main.humidity + ' %',
+                windSpeed: Math.floor(data.wind.speed) + ' km/h',
+                temperature: Math.round(data.main.temp) + ' °c',
+                location: data.name,
+            });
 
-        // parse the data into json format
-        let data = await response.json();
-
-        const humidity = document.getElementsByClassName("humidity-percent");
-        const wind = document.getElementsByClassName("wind-rate");
-        const temperature = document.getElementsByClassName("weather-temp");
-        const location = document.getElementsByClassName("weather-location");
-
-        humidity[0].innerHTML = data.main.humidity + " %";
-        wind[0].innerHTML = data.wind.speed + " km/h";
-        temperature[0].innerHTML = data.main.temp + " °c";
-        location[0].innerHTML = data.name;
-
-    }
+            if (data.weather[0].icon === '01d' || data.weather[0].icon === '01n') {
+                setWicon(clear_icon);
+            } else if (data.weather[0].icon === '02d' || data.weather[0].icon === '02n') {
+                setWicon(cloud_icon);
+            } else if (data.weather[0].icon === '03d' || data.weather[0].icon === '03n') {
+                setWicon(drizzle_icon);
+            } else if (data.weather[0].icon === '04d' || data.weather[0].icon === '04n') {
+                setWicon(drizzle_icon);
+            } else if (data.weather[0].icon === '09d' || data.weather[0].icon === '09n') {
+                setWicon(rain_icon);
+            } else if (data.weather[0].icon === '10d' || data.weather[0].icon === '10n') {
+                setWicon(rain_icon);
+            } else if (data.weather[0].icon === '13d' || data.weather[0].icon === '13n') {
+                setWicon(snow_icon);
+            } else {
+                setWicon(clear_icon);
+            }
+        } catch (error) {
+            console.error('Error fetching weather data:', error);
+        }
+    };
 
     return (
-        <div className='container'> 
-        <div className='top-bar'>
-            <input type='text' className='cityInput' placeholder='Search'></input>
-            <div className="search-icon" onClick={() => {search()}}>
-                <img src ={search_icon} alt="" />
+        <div className="container">
+            <div className="top-bar">
+                <input type="text" className="cityInput" placeholder="Search" />
+                <div className="search-icon" onClick={fetchData}>
+                    <img src={search_icon} alt="" />
+                </div>
             </div>
-        </div>
-        <div className="weather-image">
-            <img src={cloud_icon} alt=''/>
-        </div>
-        <div className="weather-temp">24°c</div>
-        <div className="weather-location">Nairobi</div>
-        <div className="data-container">
-            <div className="element">
-                <img src={humidity_icon} alt="" className="icon" />
-                <div className="data">
-                    <div className="humidity-percent">64%</div>
-                    <div className="text">Humidity</div>
-                </div> 
+            <div className="weather-image">
+                <img src={wicon} alt="" />
             </div>
-            <div className="element">
-                <img src={wind_icon} alt="" className="icon" />
-                <div className="data">
-                    <div className="wind-rate">27km/h</div>
-                    <div className="text">Wind Speed</div>
+            <div className="weather-temp">{weatherData.temperature}</div>
+            <div className="weather-location">{weatherData.location}</div>
+            <div className="data-container">
+                <div className="element">
+                    <img src={humidity_icon} alt="" className="icon" />
+                    <div className="data">
+                        <div className="humidity-percent">{weatherData.humidity}</div>
+                        <div className="text">Humidity</div>
+                    </div>
+                </div>
+                <div className="element">
+                    <img src={wind_icon} alt="" className="icon" />
+                    <div className="data">
+                        <div className="wind-rate">{weatherData.windSpeed}</div>
+                        <div className="text">Wind Speed</div>
+                    </div>
                 </div>
             </div>
         </div>
-        </div>
-    )
-}
+    );
+};
 
 export default WeatherApp;
