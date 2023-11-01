@@ -1,0 +1,42 @@
+.header {
+    padding: 10px;
+    max-width: 1320px;
+    margin: auto; 
+    display: flex;
+    color: lightseagreen;
+    font-family: "Public Sans";
+    font-size: 12px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: normal;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+}
+.logo {
+    font-size: 24px;
+    font-weight: bold;
+    padding-right: 30em;
+}
+.nav {
+    list-style: none;
+    padding: 0;
+    flex-direction: row;
+}
+
+.nav-item {
+    display: inline;
+    margin-right: 20px;
+}
+
+.nav-link {
+    text-decoration: none;
+    color: lightseagreen;
+    font-family: "Public Sans";
+    font-size: 20px;
+    font-style: normal;
+    font-weight: 800;
+    line-height: normal;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+
+}

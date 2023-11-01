@@ -8,6 +8,8 @@ import clear_icon from '../Assets/clear.png';
 import drizzle_icon from '../Assets/drizzle.png';
 import snow_icon from '../Assets/snow.png';
 import rain_icon from '../Assets/rain.png';
+import Header from '../Header/Header';
+import Footer from '../Footer/Footer';
 
 const WeatherApp = () => {
     const [weatherData, setWeatherData] = useState({
@@ -62,34 +64,38 @@ const WeatherApp = () => {
     };
 
     return (
-        <div className="container">
-            <div className="top-bar">
-                <input type="text" className="cityInput" placeholder="Search" />
-                <div className="search-icon" onClick={fetchData}>
-                    <img src={search_icon} alt="" />
-                </div>
-            </div>
-            <div className="weather-image">
-                <img src={wicon} alt="" />
-            </div>
-            <div className="weather-temp">{weatherData.temperature}</div>
-            <div className="weather-location">{weatherData.location}</div>
-            <div className="data-container">
-                <div className="element">
-                    <img src={humidity_icon} alt="" className="icon" />
-                    <div className="data">
-                        <div className="humidity-percent">{weatherData.humidity}</div>
-                        <div className="text">Humidity</div>
+        <div>
+            <Header />
+            <div className="container">
+                <div className="top-bar">
+                    <input type="text" className="cityInput" placeholder="Search" />
+                    <div className="search-icon" onClick={fetchData}>
+                        <img src={search_icon} alt="" />
                     </div>
                 </div>
-                <div className="element">
-                    <img src={wind_icon} alt="" className="icon" />
-                    <div className="data">
-                        <div className="wind-rate">{weatherData.windSpeed}</div>
-                        <div className="text">Wind Speed</div>
+                <div className="weather-image">
+                    <img src={wicon} alt="" />
+                </div>
+                <div className="weather-temp">{weatherData.temperature}</div>
+                <div className="weather-location">{weatherData.location}</div>
+                <div className="data-container">
+                    <div className="element">
+                        <img src={humidity_icon} alt="" className="icon" />
+                        <div className="data">
+                            <div className="humidity-percent">{weatherData.humidity}</div>
+                            <div className="text">Humidity</div>
+                        </div>
+                    </div>
+                    <div className="element">
+                        <img src={wind_icon} alt="" className="icon" />
+                        <div className="data">
+                            <div className="wind-rate">{weatherData.windSpeed}</div>
+                            <div className="text">Wind Speed</div>
+                        </div>
                     </div>
                 </div>
             </div>
+            <Footer />
         </div>
     );
 };

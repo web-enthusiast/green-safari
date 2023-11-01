@@ -1,0 +1,14 @@
+.footer {
+    background-color: lightseagreen;
+    padding: 10px;
+    color: #fff;
+    margin: auto; 
+    text-align: center;
+    font-family:"Public Sans";
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: normal;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+}
