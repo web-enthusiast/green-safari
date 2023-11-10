@@ -66,4 +66,4 @@ jobs:
         with:
           app-name: 'Green-safari'
           slot-name: 'Production'
-          publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_FB802B0BB640412280F10E6696335472 }}
+          publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_A01B67BEF2A34D91A76609FA259FEE99 }}
